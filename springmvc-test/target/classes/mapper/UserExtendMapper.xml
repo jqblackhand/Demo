@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lk.springmvc.demo.dao.UserExtendMapper">
+
+    <insert id="insert" parameterType="com.lk.springmvc.demo.pojo.User">
+        insert into user(username,password,sex)values (#{username},#{password},#{sex})
+    </insert>
+
+    <select id="query" parameterType="java.util.Map" resultType="com.lk.springmvc.demo.pojo.User">
+        select * from user
+        <where>
+            <if test="id!=null">
+                and  id=#{id}
+            </if>
+            <if test="name!=null and name!='' ">
+                and username like '%${name}%'
+            </if>
+        </where>
+    </select>
+
+    <update id="updateUser" parameterType="com.lk.springmvc.demo.pojo.User">
+        update user set username=#{username},password=#{password},sex=#{sex}
+        where id=#{id}
+    </update>
+
+    <delete id="delById" parameterType="java.lang.Integer" >
+        delete from user
+        where id=#{id}
+    </delete>
+    
+    <select id="selectByPrimaryKey" resultType="com.lk.springmvc.demo.pojo.User" parameterType="java.lang.Integer">
+        select id, username, password, age
+        from user
+        where id = #{id}
+    </select>
+
+</mapper>
